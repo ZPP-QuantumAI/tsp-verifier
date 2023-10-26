@@ -3,17 +3,17 @@ package pl.mimuw.zpp.quantumai.tspverifier.service;
 import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import org.springframework.stereotype.Service;
-import pl.mimuw.zpp.quantumai.tspverifier.model.Graph;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Input;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Output;
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.WeightedGraph;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
 public class VerificationService {
-    public Either<String, Long> verifyOutput(Input input, Output output) {
+    public Either<String, BigDecimal> verifyOutput(Input input, Output output) {
         List<Integer> permutation = output.permutation();
         if (!hasMatchingSize(input, output)) {
             return Either.left("output's length should be equal to number of vertices plus one");
@@ -25,17 +25,16 @@ public class VerificationService {
             return Either.left("the last vertex should be starting vertex");
         }
         if (hasInvalidVertexNumbers(permutation, input.graph().getNumberOfVertices())) {
-            return Either.left("the permutation should have vertex numbers in range [1, max vertex number]");
+            return Either.left("the permutation should have vertex numbers in range [0, max vertex number)");
         }
         if (hasDuplicates(permutation)) {
             return Either.left("the permutation contains duplicates");
         }
 
-        Graph graph = input.graph();
-        List<Either<String, Long>> weights = Stream.iterate(0, i -> i + 1)
+        WeightedGraph graph = input.graph();
+        List<Either<String, BigDecimal>> weights = Stream.iterate(0, i -> i + 1)
                 .limit(permutation.size() - 1)
                 .map(i -> graph.getWeight(permutation.get(i), permutation.get(i + 1)))
-                .map(VerificationService::getEitherFromWeight)
                 .toList();
 
         return Either.sequenceRight(weights)
@@ -47,7 +46,7 @@ public class VerificationService {
     }
 
     private static boolean hasInvalidVertexNumbers(List<Integer> permutation, int maxVertexNumber) {
-        return permutation.stream().anyMatch(elem -> elem < 1 || elem > maxVertexNumber);
+        return permutation.stream().anyMatch(elem -> elem < 0 || elem >= maxVertexNumber);
     }
 
     private static boolean hasDuplicates(List<Integer> permutation) {
@@ -61,11 +60,7 @@ public class VerificationService {
         return false;
     }
 
-    private static Either<String, Long> getEitherFromWeight(Optional<Long> weight) {
-        return weight.<Either<String,Long>>map(Either::right).orElseGet(() -> Either.left("some two vertices in the permutation do not commute"));
-    }
-
-    private static Long sum(Seq<Long> seq) {
-        return seq.foldRight(0L, Long::sum);
+    private static BigDecimal sum(Seq<BigDecimal> seq) {
+        return seq.foldRight(BigDecimal.ZERO, BigDecimal::add);
     }
 }

@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import pl.mimuw.zpp.quantumai.tspverifier.model.Graph;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Input;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Output;
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.SimpleGraph;
 import pl.mimuw.zpp.quantumai.tspverifier.service.VerificationService;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +32,7 @@ public class VerificationController {
             @RequestPart MultipartFile inputFile,
             @RequestPart MultipartFile outputFile
     ) throws Exception {
-        Either<String, Long> verification = map2(
+        Either<String, BigDecimal> verification = map2(
                     () -> generateInput(inputFile),
                     () -> generateOutput(outputFile),
                     verificationService::verifyOutput)
@@ -47,11 +48,11 @@ public class VerificationController {
             int numberOfEdges = scanner.nextInt();
             int startingVertex = scanner.nextInt();
 
-            Graph graph = new Graph(numberOfVertices);
+            SimpleGraph graph = new SimpleGraph(numberOfVertices);
             for (int i = 0; i < numberOfEdges; i++) {
                 int a = scanner.nextInt();
                 int b = scanner.nextInt();
-                long weight = scanner.nextLong();
+                BigDecimal weight = scanner.nextBigDecimal();
                 graph.addEdge(a, b, weight);
             }
 
