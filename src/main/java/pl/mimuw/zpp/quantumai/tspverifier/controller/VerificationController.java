@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Input;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Output;
-import pl.mimuw.zpp.quantumai.tspverifier.model.graph.SimpleGraph;
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.NeighborhoodListGraph;
 import pl.mimuw.zpp.quantumai.tspverifier.service.VerificationService;
 
 import java.math.BigDecimal;
@@ -48,7 +48,7 @@ public class VerificationController {
             int numberOfEdges = scanner.nextInt();
             int startingVertex = scanner.nextInt();
 
-            SimpleGraph graph = new SimpleGraph(numberOfVertices);
+            NeighborhoodListGraph graph = new NeighborhoodListGraph(numberOfVertices);
             for (int i = 0; i < numberOfEdges; i++) {
                 int a = scanner.nextInt();
                 int b = scanner.nextInt();

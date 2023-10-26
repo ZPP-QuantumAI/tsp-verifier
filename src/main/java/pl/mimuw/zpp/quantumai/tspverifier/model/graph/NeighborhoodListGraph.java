@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SimpleGraph implements WeightedGraph {
+public class NeighborhoodListGraph implements WeightedGraph {
     private final int numberOfVertices;
     private final List<List<Edge>> graph;
 
-    public SimpleGraph(int numberOfVertices) {
+    public NeighborhoodListGraph(int numberOfVertices) {
         this.numberOfVertices = numberOfVertices;
         this.graph = new ArrayList<>();
         for (int i = 0; i <= numberOfVertices; i++) {
@@ -32,7 +32,7 @@ public class SimpleGraph implements WeightedGraph {
                 .findFirst()
                 .map(Edge::weight)
                 .<Either<String, BigDecimal>>map(Either::right)
-                .orElseGet(() -> Either.left("two vertices do not commute in the graph"));
+                .orElse(Either.left("two vertices do not commute in the graph"));
     }
 
     public int getNumberOfVertices() {

@@ -2,7 +2,7 @@ package pl.mimuw.zpp.quantumai.tspverifier.service
 
 import pl.mimuw.zpp.quantumai.tspverifier.model.Input
 import pl.mimuw.zpp.quantumai.tspverifier.model.Output
-import pl.mimuw.zpp.quantumai.tspverifier.model.graph.SimpleGraph
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.NeighborhoodListGraph
 import spock.lang.Specification
 
 class VerificationServiceTest extends Specification {
@@ -96,7 +96,7 @@ class VerificationServiceTest extends Specification {
             .build()
 
     def testGraph() {
-        SimpleGraph graph = new SimpleGraph(5)
+        NeighborhoodListGraph graph = new NeighborhoodListGraph(5)
         graph.addEdge(0, 1, BigDecimal.valueOf(1))
         graph.addEdge(1, 2, BigDecimal.valueOf(2))
         graph.addEdge(2, 3, BigDecimal.valueOf(3))
