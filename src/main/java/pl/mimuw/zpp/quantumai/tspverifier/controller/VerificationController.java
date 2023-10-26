@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Input;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Output;
-import pl.mimuw.zpp.quantumai.tspverifier.model.graph.NeighborhoodListGraph;
 import pl.mimuw.zpp.quantumai.tspverifier.service.InputService;
 import pl.mimuw.zpp.quantumai.tspverifier.service.VerificationService;
 
