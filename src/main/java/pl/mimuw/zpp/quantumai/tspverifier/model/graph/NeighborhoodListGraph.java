@@ -4,10 +4,9 @@ import io.vavr.control.Either;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class NeighborhoodListGraph implements WeightedGraph {
+public class NeighborhoodListGraph implements AddEdgeWeightedGraph {
     private final int numberOfVertices;
     private final List<List<Edge>> graph;
 
@@ -19,14 +18,15 @@ public class NeighborhoodListGraph implements WeightedGraph {
         }
     }
 
+    @Override
     public void addEdge(int a, int b, BigDecimal weight) {
         graph.get(a).add(new Edge(b, weight));
         graph.get(b).add(new Edge(a, weight));
     }
 
+    @Override
     public Either<String, BigDecimal> getWeight(int a, int b) {
-        if (!verticesAreValid(a, b))
-            return Either.left("vertex number must be less or equal to the number of the number of vertices");
+        if (verticesAreInvalid(a, b)) return invalidVerticesMessage();
         return graph.get(a).stream()
                 .filter(edge -> edge.to == b)
                 .findFirst()
@@ -35,15 +35,9 @@ public class NeighborhoodListGraph implements WeightedGraph {
                 .orElse(Either.left("two vertices do not commute in the graph"));
     }
 
+    @Override
     public int getNumberOfVertices() {
         return numberOfVertices;
-    }
-
-    private boolean verticesAreValid(int... vertexNumbers) {
-        return Arrays.stream(vertexNumbers)
-                .filter(vertex -> vertex < 0 || vertex > numberOfVertices)
-                .findFirst()
-                .isEmpty();
     }
 
     private record Edge(

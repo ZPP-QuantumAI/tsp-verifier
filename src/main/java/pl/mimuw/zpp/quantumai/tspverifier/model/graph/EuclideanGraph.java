@@ -5,7 +5,6 @@ import io.vavr.control.Either;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EuclideanGraph implements WeightedGraph {
@@ -26,17 +25,8 @@ public class EuclideanGraph implements WeightedGraph {
 
     @Override
     public Either<String, BigDecimal> getWeight(int a, int b) {
-        if (!verticesAreValid(a, b)) {
-            return Either.left("vertex number must be less or equal to the number of the number of vertices");
-        }
+        if (verticesAreInvalid(a, b)) return invalidVerticesMessage();
         return Either.right(distance(nodes.get(a), nodes.get(b)));
-    }
-
-    private boolean verticesAreValid(int... vertexNumbers) {
-        return Arrays.stream(vertexNumbers)
-                .filter(vertex -> vertex < 0 || vertex >= nodes.size())
-                .findFirst()
-                .isEmpty();
     }
 
     private static BigDecimal distance(NodeCoordinates coord1, NodeCoordinates coord2) {
