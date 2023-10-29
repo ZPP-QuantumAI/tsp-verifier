@@ -2,7 +2,10 @@ package pl.mimuw.zpp.quantumai.tspverifier.service;
 
 import org.springframework.stereotype.Service;
 import pl.mimuw.zpp.quantumai.tspverifier.model.Input;
-import pl.mimuw.zpp.quantumai.tspverifier.model.graph.*;
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.AddEdgeWeightedGraph;
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.EuclideanGraph;
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.MatrixGraph;
+import pl.mimuw.zpp.quantumai.tspverifier.model.graph.NeighborhoodListGraph;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
