@@ -24,7 +24,7 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
 # Copy the built JAR file from the builder stage
-COPY --from=builder /app/build/libs/tsp-verifier-0.0.1-SNAPSHOT.jar ./your-app.jar
+COPY --from=builder /app/build/libs/tsp-verifier-*.jar ./your-app.jar
 
 EXPOSE 8080
 
