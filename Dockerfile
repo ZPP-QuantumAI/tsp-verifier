@@ -1,5 +1,5 @@
 # Use a base image with Gradle and Java pre-installed
-FROM gradle:jdk17 AS builder
+FROM gradle:jdk21 AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -18,7 +18,7 @@ COPY src/ src/
 RUN gradle --no-daemon build
 
 # Use a lightweight base image for the final application
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:21-jdk
 
 # Set the working directory
 WORKDIR /app
