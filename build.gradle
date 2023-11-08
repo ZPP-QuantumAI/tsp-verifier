@@ -9,7 +9,7 @@ group = 'pl.mimuw.zpp.quantumai'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = '21'
 }
 
 repositories {
@@ -46,4 +46,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+jar {
+    enabled = false // Disable generating plain jar.
 }

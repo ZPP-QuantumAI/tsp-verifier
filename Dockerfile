@@ -1,5 +1,5 @@
 # Use a base image with Gradle and Java pre-installed
-FROM gradle:jdk17 AS builder
+FROM gradle:jdk21 AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -18,13 +18,13 @@ COPY src/ src/
 RUN gradle --no-daemon build
 
 # Use a lightweight base image for the final application
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:21-jdk
 
 # Set the working directory
 WORKDIR /app
 
 # Copy the built JAR file from the builder stage
-COPY --from=builder /app/build/libs/tsp-verifier-0.0.1-SNAPSHOT.jar ./your-app.jar
+COPY --from=builder /app/build/libs/tsp-verifier-*.jar ./your-app.jar
 
 EXPOSE 8080
 
