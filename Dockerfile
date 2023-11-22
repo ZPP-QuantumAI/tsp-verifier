@@ -26,6 +26,7 @@ WORKDIR /app
 # Copy the built JAR file from the builder stage
 COPY --from=builder /app/build/libs/tsp-verifier*.jar ./your-app.jar
 
+
 EXPOSE 8080
 
 # Set the command to run the application
